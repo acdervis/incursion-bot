@@ -1,3 +1,4 @@
 Flask >= 0.10.1
 requests >= 2.2.1
 xlrd >= 0.9.3
+gunicorn >= 18.0
