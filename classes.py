@@ -15,7 +15,7 @@ class Incursion():
 
     def getSystemTypes(self):
         if not self.has_data():
-            return ''
+            return 'No data about VG/AS/HQ.'
         s = ''
         s += ' ST: ' + ', '.join([x.name for x in self.staging])
         s += ' VG: ' + ', '.join([x.name for x in self.vanguards])
@@ -91,9 +91,9 @@ class Constellation():
 
         for cluster in self.clusters:
             if highseconly and "L" in [x.sectype for x in cluster.systems]:
-                break
-            if preferred not in [x.type for x in cluster.systems]:
-                break
+                continue
+            if preferred not in [x.type for x in cluster.systems] and self.hasincdata:
+                continue
             winners.append(cluster)
 
         sorted(winners, key=lambda x: x.conn_count)
@@ -117,7 +117,7 @@ class Constellation():
                 elif sys.type == 'headquarters':
                     t = '(HQ), '
                 line += sys.name + t
-            result += line + 'Entrances: ' + ', '.join([x.name for x in winner.connections]) + '\n'
+            result += line + 'Entrances: ' + ', '.join([x.name for x in winner.connections]) + ' Count: %i' % winner.conn_count + '\n'
 
         return result
 
@@ -286,7 +286,6 @@ class Cluster():
     def setConnections(self):
         self.connections = []
         for conn in [x for y in self.systems for x in y.connections]:
-            print conn.ID
             if conn.ID not in [x.ID for x in self.systems]:
                 if conn.ID not in [x.ID for x in self.connections]:
                     self.connections.append(conn)
