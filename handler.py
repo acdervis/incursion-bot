@@ -1,5 +1,6 @@
 import incursion
 import json
+from flask import Response
 
 def process(data):
 
@@ -9,14 +10,15 @@ def process(data):
 
     print data
 
-    if data['text'].split()[0] == '!inc':
+    if data.split()[0] == '!inc':
         text = ""
-        if len(data['text'].split()) >= 2:
-            print data['text'].split()[1]
+        if len(data.split()) >= 2:
+            print data.split()[1]
         else:
             incursions = incursion.getIncursions(short=True)
             for inc in incursions:
                 text += inc.constellation.name + ', '
 
         d = {'text': text}
-        return json.dumps(d)
+        response = Response(json.dumps(d), mimetype='text/json')
+        return response
