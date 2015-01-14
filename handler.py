@@ -1,5 +1,5 @@
 import incursion
-
+import json
 
 def process(data):
 
@@ -10,14 +10,13 @@ def process(data):
     print data
 
     if data['text'].split()[0] == '!inc':
+        text = ""
         if len(data['text'].split()) >= 2:
             print data['text'].split()[1]
         else:
-            text = ""
             incursions = incursion.getIncursions(short=True)
             for inc in incursions:
                 text += inc.constellation.name + ', '
-            return text
 
-
-
+        d = {'text': text}
+        return json.dumps(d)
