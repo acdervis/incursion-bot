@@ -10,14 +10,14 @@ def process(data):
 
     print data
 
-    if data.split()[0] == '!inc':
+    if data == '!inc':
         text = ""
-        if len(data.split()) >= 2:
-            print data.split()[1]
-        else:
-            incursions = incursion.getIncursions(short=True)
-            for inc in incursions:
-                text += inc.constellation.name + ', '
+        # if len(data.split()) >= 2:
+        #     print data.split()[1]
+        # else:
+        incursions = incursion.getIncursions(short=True)
+        for inc in incursions:
+            text += inc.constellation.name + ', '
 
         d = {'text': text}
         response = Response(json.dumps(d), mimetype='text/json')
