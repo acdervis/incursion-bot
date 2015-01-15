@@ -1,6 +1,5 @@
 import xlrd
 from settings import SHEETS
-import copy
 
 SYS_SHEET = xlrd.open_workbook(SHEETS['SYSTEMDATA']).sheet_by_name('Sheet1')
 JUMP_SHEET = xlrd.open_workbook(SHEETS['SYSTEMJUMPS']).sheet_by_name('Sheet1')

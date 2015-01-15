@@ -24,3 +24,5 @@ def process(data):
 
         print response.get_data()
         return response
+    else:
+        return "No data provided."
