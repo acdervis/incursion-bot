@@ -2,7 +2,7 @@ HEADERS = {
     'Content-Type': 'application/vnd.ccp.eve.Api-v1+json'
 }
 
-URL = 'https://public-crest.eveonline.com'
+URL = 'http://public-crest.eveonline.com'
 
 SHEETS = {
     'SYSTEMJUMPS': 'mapSolarSystemJumps.xls',
