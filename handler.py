@@ -30,6 +30,7 @@ def process(data):
             found = False
             for inc in incursions:
                 if arg == inc.constellation.name:
+                    print arg
                     d = {
                         'name': inc.constellation.name,
                         'state': inc.state,
@@ -40,7 +41,8 @@ def process(data):
                     found = True
                     body = {'text': incursion.template_incursioninformation.substitute(d)}
             if found:
-                response = Response(json.dumps(d), mimetype='text/json')
+                response = Response(json.dumps(body), mimetype='text/json')
+                return response
             else:
                 return "Constellation not found under active incursions."
         else:

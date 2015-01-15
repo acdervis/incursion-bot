@@ -4,7 +4,7 @@ from classes import *
 from string import Template
 
 template_incursioninformation = Template(
-    "${id}) Constellation: $name\nStatus: $state, Influence: $influence\n$sysdata\nBest Pockets;\n$pockets\n"
+    "Constellation: $name\nStatus: $state, Influence: $influence\n$sysdata\nBest Pockets;\n$pockets\n"
 )
 
 mail_war = (
