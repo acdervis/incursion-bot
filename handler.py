@@ -21,4 +21,6 @@ def process(data):
 
         d = {'text': text}
         response = Response(json.dumps(d), mimetype='text/json')
+
+        print response.get_data()
         return response
