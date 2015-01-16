@@ -153,5 +153,3 @@ def user():
         }
 
         print template_incursioninformation.substitute(d)
-
-user()

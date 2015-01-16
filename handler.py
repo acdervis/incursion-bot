@@ -5,11 +5,9 @@ from flask import Response
 
 def process(data):
 
-    print type(data)
     if type(data) == type(None):
         return "No text found."
 
-    print data
 
     if data == '!inc':
         incursions = incursion.getIncursionList()
@@ -17,12 +15,13 @@ def process(data):
         d = {'text': ', '.join(incursions)}
         response = Response(json.dumps(d), mimetype='text/json')
 
-        print response.get_data()
         return response
     else:
         if data.split()[0] == '!inc':
             arg = data.split()[1]
             inc = incursion.getIncursion(arg)
+            if type(inc) is int:
+                return "Incursion not found."
             if arg == inc.constellation.name:
                 d = {
                     'name': inc.constellation.name,
@@ -31,7 +30,6 @@ def process(data):
                     'sysdata': inc.getSystemTypes(),
                     'pockets': inc.getBestClusters(),
                 }
-                found = True
                 body = {'text': incursion.template_incursioninformation.substitute(d)}
                 response = Response(json.dumps(body), mimetype='text/json')
                 return response
