@@ -135,21 +135,21 @@ def getIncursions(short=False):
 
     return incursions
 
-
-def user():
-    incursions = getIncursions()
-    for incursion in incursions:
-        for sys in incursion.constellation.systems:
-            print sys.name, sys.type
-
-    for i, incursion in enumerate(incursions):
-        d = {
-            'id': i,
-            'name': incursion.constellation.name,
-            'state': incursion.state,
-            'influence': incursion.influence,
-            'sysdata': incursion.getSystemTypes(),
-            'pockets': incursion.getBestClusters(),
-        }
-
-        print template_incursioninformation.substitute(d)
+#
+# def user():
+#     incursions = getIncursions()
+#     for incursion in incursions:
+#         for sys in incursion.constellation.systems:
+#             print sys.name, sys.type
+#
+#     for i, incursion in enumerate(incursions):
+#         d = {
+#             'id': i,
+#             'name': incursion.constellation.name,
+#             'state': incursion.state,
+#             'influence': incursion.influence,
+#             'sysdata': incursion.getSystemTypes(),
+#             'pockets': incursion.getBestClusters(),
+#         }
+#
+#         print template_incursioninformation.substitute(d)

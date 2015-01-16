@@ -101,7 +101,6 @@ class Constellation():
         for winner in winners[:5]:
             line = ''
             for i, sys in enumerate(winner.systems):
-                print sys.name, sys.type
                 t = ', '
                 if sys.type == 'vanguard':
                     t = '(VG), '
