@@ -72,6 +72,40 @@ def strSystems(incursion):
     return r
 
 
+def getIncursionList():
+    response = requests.get(URL+'/incursions/', headers=HEADERS)
+    response.raise_for_status()
+
+    incursions = []
+
+    for item in response.json()['items']:
+        incursions.append(item['constellations']['name'])
+    return incursions
+
+
+def getIncursion(const_name):
+
+    response = requests.get(URL+'/incursions/', headers=HEADERS)
+    response.raise_for_status()
+
+    for item in response.json()['items']:
+        if const_name == item['constellation']['name']:
+            new_const = Constellation(
+                ID=item['constellation']['id'],
+                name=item['constellation']['name'],
+            )
+            new_const.setSystems()
+            new_const.setIncData()
+            new_inc = Incursion(
+                constellation=new_const,
+                influence=item['influence'],
+                state=item['state'],
+                hasboss=item['hasBoss'],
+            )
+            new_inc.setSystemTypes()
+            new_inc.constellation.buildClusters()
+            return new_inc
+    return 0
 
 def getIncursions(short=False):
 
@@ -81,14 +115,12 @@ def getIncursions(short=False):
     incursions = []
 
     for item in response.json()['items']:
-        print item['constellation']['name']
         new_const = Constellation(
                 ID=item['constellation']['id'],
                 name=item['constellation']['name'],
             )
         if not short:
             new_const.setSystems()
-            new_const.buildClusters()
             new_const.setIncData()
         new_inc = Incursion(
             constellation=new_const,
@@ -98,6 +130,7 @@ def getIncursions(short=False):
         )
         if not short:
             new_inc.setSystemTypes()
+            new_inc.constellation.buildClusters()
         incursions.append(new_inc)
 
     return incursions
@@ -105,6 +138,9 @@ def getIncursions(short=False):
 
 def user():
     incursions = getIncursions()
+    for incursion in incursions:
+        for sys in incursion.constellation.systems:
+            print sys.name, sys.type
 
     for i, incursion in enumerate(incursions):
         d = {
@@ -117,3 +153,5 @@ def user():
         }
 
         print template_incursioninformation.substitute(d)
+
+user()

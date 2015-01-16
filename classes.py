@@ -26,11 +26,6 @@ class Incursion():
         return self.constellation.getBestClusters()
 
     def setSystemTypes(self):
-        if self.constellation is None:
-            msg = "Constellation for Incursion not set."
-            raise Exception(msg)
-        if not self.has_data():
-            return
 
         self.staging = self.constellation.staging()
         self.vanguards = self.constellation.vanguards()
@@ -106,6 +101,7 @@ class Constellation():
         for winner in winners[:5]:
             line = ''
             for i, sys in enumerate(winner.systems):
+                print sys.name, sys.type
                 t = ', '
                 if sys.type == 'vanguard':
                     t = '(VG), '
@@ -240,7 +236,7 @@ class System():
             if self.constellation == int(sheet.cell(rowidx, 0).value):
                 for colidx in range(1, sheet.ncols):
                     if sheet.cell(rowidx, colidx).value != "":
-                        if self.ID in map(int, map(float, str(sheet.cell(rowidx, colidx).value).split(','))):
+                        if str(self.ID) in str(sheet.cell(rowidx, colidx).value):
                             self.type = sheet.cell(0, colidx).value
                             return
 
@@ -290,10 +286,15 @@ class Cluster():
                     self.connections.append(conn)
         self.conn_count = len(self.connections)
 
+    def setSysType(self):
+        for sys in self.systems:
+            sys.setIncData()
+
     def __init__(self, systems=None, connections=None):
         if systems is None:
             systems = []
         self.systems = systems
+        self.setSysType()
         if connections is None:
             connections = []
         self.connections = connections
