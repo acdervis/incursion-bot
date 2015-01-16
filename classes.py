@@ -289,11 +289,16 @@ class Cluster():
         for sys in self.systems:
             sys.setIncData()
 
+    def setSysConn(self):
+        for sys in self.systems:
+            sys.initConnections(JUMP_SHEET)
+
     def __init__(self, systems=None, connections=None):
         if systems is None:
             systems = []
         self.systems = systems
         self.setSysType()
+        self.setSysConn()
         if connections is None:
             connections = []
         self.connections = connections
