@@ -79,7 +79,7 @@ def getIncursionList():
     incursions = []
 
     for item in response.json()['items']:
-        incursions.append(item['constellations']['name'])
+        incursions.append(item['constellation']['name'])
     return incursions
 
 
